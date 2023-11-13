@@ -137,7 +137,7 @@ onMount(async () => {
             try {
                 const sectionContent = await generateSectionContent(context);
                 articleSections.push(sectionContent);
-                requestCount++:
+                requestCount++;
             } catch (err) {
                 console.error("Error generating content for section:", err);
                 // Handle the error appropriately
