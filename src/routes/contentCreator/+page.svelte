@@ -66,7 +66,7 @@ onMount(async () => {
     let error = false;
     let answer = '';
     let copyDisabled = true;
-
+    let requestCount = 0;
     // let selectedContent = null;
     let showLogin = false; // Add this to track if the login modal should be shown
     let showHistory = false;
@@ -131,8 +131,8 @@ onMount(async () => {
         const outlineSections = parseOutline(answer); // Parse the outline into sections
         let articleSections: string[] = [];
         for (const section of outlineSections) {
-	    requestCount++;
-            console.log("Request count incremented to: ", requestCount);
+	        requestCount++;
+            //console.log("Request count incremented to: ", requestCount);
             context = "Create content for this section: " + section.trim() +
             ", Write it in this writing style and tone: " + tone + ", and include these keywords: " + keywords;
 
@@ -249,6 +249,7 @@ onMount(async () => {
 <div class="max-w-md w-full m-auto flex flex-col items-center p-12">
     <h1 class="text-3xl font-semibold">Write Me an Article</h1>
     <h2 class="text-sm text-dull my-6">Please fill out the details</h2>
+    <p>Number of requests sent: {requestCount}</p>
     <form on:submit|preventDefault={handleSubmit} class="w-full p-4">
         <FieldWrapper 
         label="Tone & Style"
