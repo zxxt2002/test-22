@@ -249,7 +249,10 @@ onMount(async () => {
 <div class="max-w-md w-full m-auto flex flex-col items-center p-12">
     <h1 class="text-3xl font-semibold">Write Me an Article</h1>
     <h2 class="text-sm text-dull my-6">Please fill out the details</h2>
-    <p>Number of requests sent: {requestCount}</p>
+    <!-- <p>Number of requests sent: {requestCount}</p> -->
+    <div class="request-count-display">
+        <p>Number of Requests Made: {requestCount}</p>
+    </div>
     <form on:submit|preventDefault={handleSubmit} class="w-full p-4">
         <FieldWrapper 
         label="Tone & Style"
