@@ -131,14 +131,13 @@ onMount(async () => {
         const outlineSections = parseOutline(answer); // Parse the outline into sections
         let articleSections: string[] = [];
         for (const section of outlineSections) {
-	        requestCount++;
-            //console.log("Request count incremented to: ", requestCount);
             context = "Create content for this section: " + section.trim() +
             ", Write it in this writing style and tone: " + tone + ", and include these keywords: " + keywords;
 
             try {
                 const sectionContent = await generateSectionContent(context);
                 articleSections.push(sectionContent);
+                requestCount++:
             } catch (err) {
                 console.error("Error generating content for section:", err);
                 // Handle the error appropriately
