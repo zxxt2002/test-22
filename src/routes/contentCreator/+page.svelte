@@ -131,6 +131,8 @@ onMount(async () => {
         const outlineSections = parseOutline(answer); // Parse the outline into sections
         let articleSections: string[] = [];
         for (const section of outlineSections) {
+	    requestCount++;
+            console.log("Request count incremented to: ", requestCount);
             context = "Create content for this section: " + section.trim() +
             ", Write it in this writing style and tone: " + tone + ", and include these keywords: " + keywords;
 
