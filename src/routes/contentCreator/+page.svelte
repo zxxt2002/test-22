@@ -143,44 +143,9 @@ onMount(async () => {
                 // Handle the error appropriately
             }
         }
-		const eventSource = new SSE('/api/explain2', {
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			payload: JSON.stringify({ context })
-		})
+        loading2 = false;
+        error2 = answer2 === '';// If no content is generated, consider it an error
 
-		context = ''
-        
-		eventSource.addEventListener('error', (e) => {
-			error2 = true
-			loading2 = false
-			alert('Something went wrong!')
-		})
-
-		eventSource.addEventListener('message', (e) => {
-			try {
-				loading2 = false
-
-				if (e.data === '[DONE]') {
-					//copyDisabled = false;
-					return
-				}
-
-				const completionResponse: CreateCompletionResponse = JSON.parse(e.data)
-
-				const [{ text }] = completionResponse.choices
-
-				answer2 = (answer2 ?? '') + text
-			} catch (err) {
-				error2 = true
-				loading2 = false
-				console.error(err)
-				alert('Something went wrong!')
-			}
-		})
-
-		eventSource.stream()
 	}
 
 	const copyToClipboard = () => {
