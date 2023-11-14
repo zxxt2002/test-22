@@ -269,32 +269,17 @@ onMount(async () => {
         
         <button class="bg-secondary w-full p-4 rounded-md my-2">Write Outline for Article</button>
         {#if answer}
-        <FieldWrapper 
-            label="Generated Outline"
-        >
-            <textarea 
-                class="form-field" 
-                rows="20" 
-                bind:value={answer} 
-                style="color: white;"
-            />
-        </FieldWrapper>
-        {#if dividedSections.length > 0}
-            <h2>Divided Sections:</h2>
-            <ul>
-                {#each dividedSections as section, index}
-                    <li>
-                        <!-- Content of the section -->
-                        <div class="section-content">
-                            {section}
-                        </div>
-                        <!-- Black line separator, not added after the last item -->
-                        {#if index < dividedSections.length - 1}
-                            <hr class="section-separator"/>
-                        {/if}
-                    </li>
-                {/each}
-            </ul>
+            <FieldWrapper label="Generated Outline">
+                <textarea 
+                    class="form-field" 
+                    rows="20" 
+                    bind:value={answer} 
+                    style="color: white;"
+                />
+            </FieldWrapper>
+            {#if dividedSections.length > 0}
+                <h2>Number of Divided Sections: {dividedSections.length}</h2>
+            {/if}
         {/if}
         <button on:click|preventDefault={copyToClipboard} class="bg-secondary w-full p-4 rounded-md my-2" disabled={copyDisabled}>Copy</button>
         <button on:click|preventDefault={handleSubmitArt} class="bg-secondary w-full p-4 rounded-md my-2" >Generate Article</button>
