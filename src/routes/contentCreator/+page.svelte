@@ -204,6 +204,18 @@ onMount(async () => {
 
 </script>
 
+<style>
+    .section-content {
+        /* Add any styles you want for the section content here */
+        padding-bottom: 10px; /* Space at the bottom of each section */
+    }
+    .section-separator {
+        height: 2px; /* The thickness of the separator line */
+        background-color: black; /* Color of the separator line */
+        margin: 10px 0; /* Space above and below the line */
+    }
+</style>
+
 <header>
     <nav>
         <button on:click={() => showLogin = !showLogin}>Login</button>
@@ -267,20 +279,23 @@ onMount(async () => {
                 style="color: white;"
             />
         </FieldWrapper>
-        {#if dividedSections.length > 0}
-        <h2>Divided Sections:</h2>
-        <ul>
-            {#each dividedSections as section, index}
-                <li>
-                    <strong>Section {index + 1}:</strong>
-                    <p>{section}</p>
-                    {#if index < dividedSections.length - 1} <!-- Don't add a line after the last section -->
-                        <hr/> <!-- This adds a horizontal line between sections -->
-                    {/if}
-                </li>
-            {/each}
-        </ul>
-    {/if}
+        {#if outlineSections.length > 0}
+            <h2>Divided Sections:</h2>
+            <ul>
+                {#each outlineSections as section, index}
+                    <li>
+                        <!-- Content of the section -->
+                        <div class="section-content">
+                            {section}
+                        </div>
+                        <!-- Black line separator, not added after the last item -->
+                        {#if index < outlineSections.length - 1}
+                            <hr class="section-separator"/>
+                        {/if}
+                    </li>
+                {/each}
+            </ul>
+        {/if}
         <button on:click|preventDefault={copyToClipboard} class="bg-secondary w-full p-4 rounded-md my-2" disabled={copyDisabled}>Copy</button>
         <button on:click|preventDefault={handleSubmitArt} class="bg-secondary w-full p-4 rounded-md my-2" >Generate Article</button>
         <FieldWrapper 
