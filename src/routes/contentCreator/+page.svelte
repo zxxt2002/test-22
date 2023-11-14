@@ -280,21 +280,21 @@ onMount(async () => {
             {#if dividedSections.length > 0}
                 <h2>Number of Divided Sections: {dividedSections.length}</h2>
             {/if}
+        
+            <button on:click|preventDefault={copyToClipboard} class="bg-secondary w-full p-4 rounded-md my-2" disabled={copyDisabled}>Copy</button>
+            <button on:click|preventDefault={handleSubmitArt} class="bg-secondary w-full p-4 rounded-md my-2" >Generate Article</button>
+            <FieldWrapper 
+            label="Generated Article"
+        >
+            <textarea 
+                id = "Custom Article"
+                class="form-field" 
+                rows="20" 
+                bind:value={answer2} 
+                style="color: white;"
+            />
+            </FieldWrapper>
         {/if}
-        <button on:click|preventDefault={copyToClipboard} class="bg-secondary w-full p-4 rounded-md my-2" disabled={copyDisabled}>Copy</button>
-        <button on:click|preventDefault={handleSubmitArt} class="bg-secondary w-full p-4 rounded-md my-2" >Generate Article</button>
-        <FieldWrapper 
-        label="Generated Article"
-    >
-        <textarea 
-            id = "Custom Article"
-            class="form-field" 
-            rows="20" 
-            bind:value={answer2} 
-            style="color: white;"
-        />
-        </FieldWrapper>
-    {/if}
     </form>
 
 
