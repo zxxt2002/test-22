@@ -33,9 +33,10 @@ async function getPersonas(db: Firestore) {
 }
 
 function parseOutline(outline: string): string[] {
-    // This is a simple example. Adapt this logic based on your actual outline format.
-    // Let's assume each section starts with a number followed by a period (e.g., "1. Introduction")
-    return outline.split(/\d+\./).filter(section => section.trim() !== '');
+
+    const sectionRegex = /Section \d+: /g;
+
+    return outline.split(sectionRegex).filter(section => section.trim() !== '');
 }
 
 let writingStyles: any[] = [];
