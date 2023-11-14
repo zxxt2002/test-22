@@ -67,6 +67,7 @@ onMount(async () => {
     let answer = '';
     let copyDisabled = true;
     let requestCount = 0;
+    let dividedSections = [];
     // let selectedContent = null;
     let showLogin = false; // Add this to track if the login modal should be shown
     let showHistory = false;
@@ -169,8 +170,9 @@ onMount(async () => {
         error2 = false;
         answer2 = '';
         const outlineSections = parseOutline(answer); // Parse the outline into sections
+        dividedSections = outlineSections;
         // Print the sections to the console
-        console.log("Outline Sections:", outlineSections);
+        //console.log("Outline Sections:", outlineSections);
         for (let i = 0; i < outlineSections.length; i++) {
             const section = outlineSections[i];
             context = "Create content for this section: " + section.trim() +
@@ -223,6 +225,7 @@ onMount(async () => {
     <div class="request-count-display">
         <p>Number of Requests Made: {requestCount}</p>
     </div>
+
     <form on:submit|preventDefault={handleSubmit} class="w-full p-4">
         <FieldWrapper 
         label="Tone & Style"
@@ -264,6 +267,14 @@ onMount(async () => {
                 style="color: white;"
             />
         </FieldWrapper>
+        {#if dividedSections.length > 0}
+        <h2>Divided Sections:</h2>
+        <ul>
+            {#each dividedSections as section, index}
+                <li>Section {index + 1}: {section}</li>
+            {/each}
+        </ul>
+        {/if}
         <button on:click|preventDefault={copyToClipboard} class="bg-secondary w-full p-4 rounded-md my-2" disabled={copyDisabled}>Copy</button>
         <button on:click|preventDefault={handleSubmitArt} class="bg-secondary w-full p-4 rounded-md my-2" >Generate Article</button>
         <FieldWrapper 
