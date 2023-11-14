@@ -271,10 +271,16 @@ onMount(async () => {
         <h2>Divided Sections:</h2>
         <ul>
             {#each dividedSections as section, index}
-                <li>Section {index + 1}: {section}</li>
+                <li>
+                    <strong>Section {index + 1}:</strong>
+                    <p>{section}</p>
+                    {#if index < dividedSections.length - 1} <!-- Don't add a line after the last section -->
+                        <hr/> <!-- This adds a horizontal line between sections -->
+                    {/if}
+                </li>
             {/each}
         </ul>
-        {/if}
+    {/if}
         <button on:click|preventDefault={copyToClipboard} class="bg-secondary w-full p-4 rounded-md my-2" disabled={copyDisabled}>Copy</button>
         <button on:click|preventDefault={handleSubmitArt} class="bg-secondary w-full p-4 rounded-md my-2" >Generate Article</button>
         <FieldWrapper 
