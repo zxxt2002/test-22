@@ -279,17 +279,17 @@ onMount(async () => {
                 style="color: white;"
             />
         </FieldWrapper>
-        {#if outlineSections.length > 0}
+        {#if dividedSections.length > 0}
             <h2>Divided Sections:</h2>
             <ul>
-                {#each outlineSections as section, index}
+                {#each dividedSections as section, index}
                     <li>
                         <!-- Content of the section -->
                         <div class="section-content">
                             {section}
                         </div>
                         <!-- Black line separator, not added after the last item -->
-                        {#if index < outlineSections.length - 1}
+                        {#if index < dividedSections.length - 1}
                             <hr class="section-separator"/>
                         {/if}
                     </li>
