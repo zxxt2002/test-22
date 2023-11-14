@@ -169,7 +169,8 @@ onMount(async () => {
         error2 = false;
         answer2 = '';
         const outlineSections = parseOutline(answer); // Parse the outline into sections
-
+        // Print the sections to the console
+        console.log("Outline Sections:", outlineSections);
         for (let i = 0; i < outlineSections.length; i++) {
             const section = outlineSections[i];
             context = "Create content for this section: " + section.trim() +
