@@ -120,33 +120,73 @@ onMount(async () => {
 		eventSource.stream()
 	}
 
+
+    const generateSectionContent = async (context, sectionIndex, totalSections) => {
+        const eventSource = new SSE('/api/explain2', {
+            headers: { 'Content-Type': 'application/json' },
+            payload: JSON.stringify({ context })
+        });
+
+        return new Promise((resolve, reject) => {
+            eventSource.addEventListener('error', (e) => {
+                eventSource.close();
+                reject(new Error('Error in generating content for section'));
+            });
+
+            eventSource.addEventListener('message', (e) => {
+                if (e.data === '[DONE]') {
+                    eventSource.close();
+                    if (sectionIndex < totalSections - 1) {
+                        // Proceed to next section
+                        requestCount++;
+                        resolve('');
+                    } else {
+                        // Final section
+                        loading2 = false;
+                        error2 = answer2 === '';
+                        resolve('');
+                    }
+                    return;
+                }
+
+                try {
+                    const completionResponse = JSON.parse(e.data);
+                    const [{ text }] = completionResponse.choices;
+                    resolve(text);
+                } catch (err) {
+                    eventSource.close();
+                    reject(new Error('Parsing error in generating content for section'));
+                }
+            });
+
+            eventSource.stream();
+        });
+    };
+
+
     const handleSubmitArt = async () => {
-		loading2 = true
-		error2 = false
-		answer2 = ''
-		context = ''
-		// context = "Create an article based on this outline: " + answer +
-		// ", Write it in this writing style and tone: " + tone + ", and inlcude these keywords: " + keywords;
-        
+        loading2 = true;
+        error2 = false;
+        answer2 = '';
         const outlineSections = parseOutline(answer); // Parse the outline into sections
-        let articleSections: string[] = [];
-        for (const section of outlineSections) {
+
+        for (let i = 0; i < outlineSections.length; i++) {
+            const section = outlineSections[i];
             context = "Create content for this section: " + section.trim() +
             ", Write it in this writing style and tone: " + tone + ", and include these keywords: " + keywords;
 
             try {
-                const sectionContent = await generateSectionContent(context);
-                articleSections.push(sectionContent);
-                requestCount++;
+                const sectionContent = await generateSectionContent(context, i, outlineSections.length);
+                answer2 += sectionContent; // Append the content of each section to answer2
             } catch (err) {
                 console.error("Error generating content for section:", err);
-                // Handle the error appropriately
+                break; // Stop further processing on error
             }
         }
-        loading2 = false;
-        error2 = answer2 === '';// If no content is generated, consider it an error
 
-	}
+        loading2 = false;
+        error2 = answer2 === ''; // If no content is generated, consider it an error
+    };
 
 	const copyToClipboard = () => {
 		const elem = document.createElement('textarea')
@@ -157,43 +197,7 @@ onMount(async () => {
 		document.body.removeChild(elem)
 		alert('Copied to clipboard!')
  	}
-    async function generateSectionContent(context: string): Promise<string> {
-    // Placeholder for your API call logic
-    // Similar to the existing API call in your code
-    // Return the content for each section
-        return new Promise((resolve, reject) => {
-            const eventSource = new SSE('/api/explain2', {
-                headers: { 'Content-Type': 'application/json' },
-                payload: JSON.stringify({ context })
-            });
 
-            let sectionContent = '';
-
-            eventSource.addEventListener('error', (e) => {
-                eventSource.close();
-                reject(new Error('Error in generating content for section'));
-            });
-
-            eventSource.addEventListener('message', (e) => {
-                if (e.data === '[DONE]') {
-                    eventSource.close();
-                    resolve(sectionContent); // Resolve the promise with the accumulated content
-                    return;
-                }
-
-                try {
-                    const completionResponse: CreateCompletionResponse = JSON.parse(e.data);
-                    const [{ text }] = completionResponse.choices;
-                    sectionContent += text;
-                } catch (err) {
-                    eventSource.close();
-                    reject(new Error('Parsing error in generating content for section'));
-                }
-            });
-
-            eventSource.stream();
-        });
-    }
 </script>
 
 <header>
