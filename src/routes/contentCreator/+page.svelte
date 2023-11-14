@@ -170,7 +170,9 @@ onMount(async () => {
         loading2 = true;
         error2 = false;
         answer2 = '';
+        console.log("Full outline:", answer);
         const outlineSections = parseOutline(answer); // Parse the outline into sections
+        console.log("Divided Sections:", outlineSections);
         dividedSections = outlineSections;
         // Print the sections to the console
         //console.log("Outline Sections:", outlineSections);
