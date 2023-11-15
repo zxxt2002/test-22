@@ -78,9 +78,9 @@ onMount(async () => {
 		error = false
 		answer = ''
 		context = ''
-		context = "Create an outline for a comprehensive 3000-4000 word article about " + requirement + 
+		context = "Create an outline for a comprehensive 3000-4000 words article about " + requirement + 
 		", give speculated word counts for each section. Write it for the target audience being: " + targetAudience +
-        ". also need to have word 'section' at begining of each section in outline";
+        ". also need to have word 'section' at begining of each suggested part in outline";
 
 		const eventSource = new SSE('/api/explain2', { // create eventsource which opens Server sent events connection to endpoint
 			headers: {
@@ -170,8 +170,9 @@ onMount(async () => {
         //console.log("Outline Sections:", outlineSections);
         for (let i = 0; i < outlineSections.length; i++) {
             const section = outlineSections[i];
-            context = "Create content for this section: " + section.trim() +
-            ", Write it in this writing style and tone: " + tone + ", and include these keywords: " + keywords;
+            context = "Create one paragraph for this section: " + section.trim() +
+            ", Write it in this writing style and tone: " + tone + ", and include these keywords: " + keywords + 
+	    ". Note: try not have duplicated contents from previous conversations";
 
             try {
                 const sectionContent = await generateSectionContent(context, i, outlineSections.length);
