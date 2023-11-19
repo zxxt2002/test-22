@@ -222,18 +222,35 @@ onMount(async () => {
 </script>
 
 <style>
-    button + button {
-	margin-right: 10px;
-    }
-    .section-content {
+	button {
+	    background-color: #007bff; /* Bootstrap primary color */
+	    color: white;
+	    padding: 0.5rem 1rem;
+	    margin: 0.5rem;
+	    border: none;
+	    border-radius: 0.25rem;
+	    cursor: pointer;
+	    font-size: 1rem;
+	    transition: background-color 0.15s ease-in-out;
+	}
+	
+	button:hover {
+	    background-color: #0056b3; /* Darken color on hover */
+	}
+	
+	/* Ensure this is within your <style> block */
+	button + button {
+	    margin-right: 10px;
+	}
+    	.section-content {
         /* Add any styles you want for the section content here */
-        padding-bottom: 10px; /* Space at the bottom of each section */
-    }
-    .section-separator {
-        height: 2px; /* The thickness of the separator line */
-        background-color: black; /* Color of the separator line */
-        margin: 10px 0; /* Space above and below the line */
-    }
+        	padding-bottom: 10px; /* Space at the bottom of each section */
+    	}
+    	.section-separator {
+        	height: 2px; /* The thickness of the separator line */
+        	background-color: black; /* Color of the separator line */
+       		margin: 10px 0; /* Space above and below the line */
+    	}
 </style>
 
 <header>
