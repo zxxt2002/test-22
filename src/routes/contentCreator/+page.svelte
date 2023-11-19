@@ -88,7 +88,6 @@ onMount(async () => {
     let dividedSections = [];
     // let selectedContent = null;
     let showLogin = false; // Add this to track if the login modal should be shown
-    let showHistory = false;
 
     const handleSubmit = async () => {
 		loading = true
