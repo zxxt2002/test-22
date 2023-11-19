@@ -41,7 +41,7 @@ function parseOutline(outline: string): string[] {
 
     return outline.split(sectionRegex).filter(section => section.trim() !== '');
 }
-
+let showHistory = false;
 let writingStyles: any[] = [];
 let markdownContent = '';
         /**
@@ -217,10 +217,15 @@ onMount(async () => {
 		document.body.removeChild(elem)
 		alert('Copied to clipboard!')
  	}
-
+	function toggleHistory() {
+	    showHistory = !showHistory;
+	}
 </script>
 
 <style>
+    button + button {
+	margin-right: 10px;
+    }
     .section-content {
         /* Add any styles you want for the section content here */
         padding-bottom: 10px; /* Space at the bottom of each section */
@@ -239,13 +244,12 @@ onMount(async () => {
             <Login />
         {/if}
 
-        <button on:click={() => showHistory = !showHistory}>{showHistory ? 'Close History' : 'History'}</button>
-        {#if showHistory}
-            <History visible={showHistory} onClose={() => showHistory = false} />
-        {/if}
+        <button on:click={toggleHistory}>{showHistory ? 'Close History' : 'History'}</button>
     </nav>
 </header>
-
+{#if showHistory}
+    <History visible={showHistory} onClose={() => showHistory = false} />
+{/if}
 <div class="max-w-md w-full m-auto flex flex-col items-center p-12">
     <h1 class="text-3xl font-semibold">Write Me an Article</h1>
     <h2 class="text-sm text-dull my-6">Please fill out the details</h2>
