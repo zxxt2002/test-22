@@ -21,7 +21,10 @@ export const POST: RequestHandler = async ({ request }) => {
 			throw new Error('Request data missing')
 		}
 
+		
+
 		const { context } = requestData
+
 
 		if (!context) {
 			throw new Error('No context provided')
@@ -29,34 +32,27 @@ export const POST: RequestHandler = async ({ request }) => {
 
 		const prompt = stripIndent`
         ${oneLine`
-		You will help me write sections of an article in markdown syntax. You will be provided with an outline for a section of an article(delimited with ###). Generate the article in markdown syntax.
+		Analyze my writing style below for tone, voice, vocabulary, and sentence structure and describe it in couple sentences. 
         `}
 
         Context:"""${context.trim()}"""
 
         Answer:
         `
-
-
 		const response = await fetch('https://api.openai.com/v1/completions', {
 			headers: {
 				Authorization: `Bearer ${OPENAI_KEY}`,
 				'Content-Type': 'application/json'
 			},
 			method: 'POST',
-			body: JSON.stringify({
+			body: JSON.stringify( {
 				model: 'gpt-3.5-turbo-instruct',
 				prompt,
 				max_tokens: 1024,
-				temperature: 0.5,
-                top_p: 1,
-                frequency_penalty: 0,
-                presence_penalty: 0,
+				temperature: 1,
 				stream: true,
 			})
 		})
-
-    
 
 		if (!response.ok) {
 			const err = await response.json()
@@ -74,3 +70,4 @@ export const POST: RequestHandler = async ({ request }) => {
 		throw error(500, 'An error occurred')
 	}
 }
+

@@ -29,14 +29,13 @@ export const POST: RequestHandler = async ({ request }) => {
 
 		const prompt = stripIndent`
         ${oneLine`
-		You will help me write sections of an article in markdown syntax. You will be provided with an outline for a section of an article(delimited with ###). Generate the article in markdown syntax.
+		You help me write in depth, comprehensive article outlines. You will be provided with information on the desired tone, target audience, and article length. Each section of the article should start with the word 'section'. 
         `}
 
         Context:"""${context.trim()}"""
 
         Answer:
         `
-
 
 		const response = await fetch('https://api.openai.com/v1/completions', {
 			headers: {
@@ -47,16 +46,11 @@ export const POST: RequestHandler = async ({ request }) => {
 			body: JSON.stringify({
 				model: 'gpt-3.5-turbo-instruct',
 				prompt,
-				max_tokens: 1024,
-				temperature: 0.5,
-                top_p: 1,
-                frequency_penalty: 0,
-                presence_penalty: 0,
+				max_tokens: 3024,
+				temperature: .5,
 				stream: true,
 			})
 		})
-
-    
 
 		if (!response.ok) {
 			const err = await response.json()
