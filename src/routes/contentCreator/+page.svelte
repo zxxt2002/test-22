@@ -3,7 +3,7 @@
     import { SSE } from 'sse.js';
     import FieldWrapper from "../../components/field-wrapper.svelte";
     import Login from './login.svelte'; // Ensure the correct path
-    import History from 'src/routes/contentCreator/history.svelte';
+    import History from './+history.svelte';
     import { initializeApp } from 'firebase/app';
     import { getFirestore, setDoc, getDocs, collection, Firestore } from 'firebase/firestore';
     import { docStore } from "sveltefire";
