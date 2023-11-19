@@ -239,7 +239,7 @@ onMount(async () => {
             <Login />
         {/if}
 
-        <button on:click={() => showHistory = true}>History</button>
+        <button on:click={() => showHistory = !showHistory}>{showHistory ? 'Close History' : 'History'}</button>
         {#if showHistory}
             <History visible={showHistory} onClose={() => showHistory = false} />
         {/if}
