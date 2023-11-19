@@ -94,24 +94,5 @@
         top: 10px;
         right: 10px;
     }
-    .overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        z-index: 1000; /* High z-index to be on top */
-    }
-    
-    .modal {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: white;
-        padding: 20px;
-        z-index: 1001; /* Higher than overlay to be on top */
-        /* Rest of your modal styles */
-    }
+
 </style>
