@@ -253,11 +253,14 @@ onMount(async () => {
 	.fixed-top-left {
 	        position: fixed;
 	        top: 200;
-	        left: 50;
+	        left: 0;
 	        margin: 1rem;
 	        z-index: 1050; /* Ensure it's above the modal */
 	}
 	
+	.history-button {
+	    /* ... */
+	}
 	button.history-button:hover {
 	        background-color: #23272b; /* Darken color on hover */
 	}
@@ -266,11 +269,11 @@ onMount(async () => {
 
 <header>
     <nav>
-        <button class="history-button" on:click={toggleHistory}>History</button>
+        <button class="history-button fixed-top-left" on:click={toggleHistory}>History</button>
     </nav>
 </header>
 {#if showHistory}
-    <History {visible}={showHistory} onClose={closeHistory} />
+    <History bind:visible={showHistory} onClose={closeHistory} />
 {/if}
 <div class="max-w-md w-full m-auto flex flex-col items-center p-12">
     <h1 class="text-3xl font-semibold">Write Me an Article</h1>
