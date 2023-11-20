@@ -239,35 +239,27 @@ onMount(async () => {
 	        display: flex;
 	        justify-content: center; /* Center the button horizontally */
     	}
-	.fixed-top-left {
-	  position: fixed; /* This will take the button out of the normal flow and position it */
-	  top: 0; /* Align to the top of the window */
-	  left: 0; /* Align to the left of the window */
-	  margin: 1rem; /* Add some space from the edges */
-	  z-index: 1002; /* Make sure this is above other content but below your modal's z-index if it's open */
+	button.history-button {
+	        background-color: #343a40; /* Bootstrap primary color */
+	        color: white;
+	        padding: 0.5rem 1rem;
+	        margin: 0.5rem;
+	        border: none;
+	        border-radius: 0.25rem;
+	        cursor: pointer;
+	        font-size: 1rem;
+	        transition: background-color 0.15s ease-in-out;
 	}
 	
-	/* Add or adjust styles for the history button as needed */
-	.history-button {
-	  background-color: #343a40; /* Bootstrap dark grey color */
-	  color: white;
-	  padding: 0.5rem 1rem;
-	  border: none;
-	  border-radius: 0.25rem;
-	  cursor: pointer;
-	  font-size: 1rem;
-	  transition: background-color 0.15s ease-in-out;
-	}
-	
-	.history-button:hover {
-	  background-color: #23272b; /* Darken the button color on hover */
+	button.history-button:hover {
+	        background-color: #23272b; /* Darken color on hover */
 	}
 </style>
 
 
 <header>
     <nav>
-        <button class="history-button fixed-top-left" on:click={toggleHistory}>History</button>
+        <button class="history-button" on:click={toggleHistory}>History</button>
     </nav>
 </header>
 {#if showHistory}
