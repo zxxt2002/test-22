@@ -235,8 +235,12 @@ onMount(async () => {
         	background-color: black; /* Color of the separator line */
        		margin: 10px 0; /* Space above and below the line */
     	}
+	nav {
+	        display: flex;
+	        justify-content: center; /* Center the button horizontally */
+    	}
 	button.history-button {
-	        background-color: #007bff; /* Bootstrap primary color */
+	        background-color: #343a40; /* Bootstrap primary color */
 	        color: white;
 	        padding: 0.5rem 1rem;
 	        margin: 0.5rem;
@@ -248,7 +252,7 @@ onMount(async () => {
 	}
 	
 	button.history-button:hover {
-	        background-color: #0056b3; /* Darken color on hover */
+	        background-color: #23272b; /* Darken color on hover */
 	}
 </style>
 
