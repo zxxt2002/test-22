@@ -241,7 +241,7 @@ onMount(async () => {
 
         <button on:click={() => showHistory = true}>History</button>
         {#if showHistory}
-            <History {visible}={showHistory} onClose={closeHistory} />
+            <History visible={showHistory} onClose={closeHistory} />
         {/if}
     </nav>
 </header>
