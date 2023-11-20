@@ -219,6 +219,10 @@ onMount(async () => {
 	function toggleHistory() {
 	    showHistory = !showHistory;
 	}
+	function closeHistory() {
+		showHistory = false;
+	}
+
 </script>
 
 <style>
@@ -240,7 +244,7 @@ onMount(async () => {
     </nav>
 </header>
 {#if showHistory}
-    <History visible={showHistory} onClose={() => showHistory = false} />
+    <History visible={showHistory} onClose={closeHistory} />
 {/if}
 <div class="max-w-md w-full m-auto flex flex-col items-center p-12">
     <h1 class="text-3xl font-semibold">Write Me an Article</h1>
