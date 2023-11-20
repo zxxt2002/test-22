@@ -252,7 +252,7 @@ onMount(async () => {
 	}
 	.fixed-top-left {
 	        position: fixed;
-	        top: 0;
+	        top: 200;
 	        left: 0;
 	        margin: 1rem;
 	        z-index: 1050; /* Ensure it's above the modal */
