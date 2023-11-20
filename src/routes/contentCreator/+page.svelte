@@ -270,7 +270,7 @@ onMount(async () => {
     </nav>
 </header>
 {#if showHistory}
-    <History visible={showHistory} onClose={closeHistory} />
+    <History {showHistory} onClose={closeHistory} />
 {/if}
 <div class="max-w-md w-full m-auto flex flex-col items-center p-12">
     <h1 class="text-3xl font-semibold">Write Me an Article</h1>
