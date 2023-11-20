@@ -2,8 +2,8 @@
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
 
-    export let showHistory;  // accept the prop from parent
-    export let onClose;  // accept the close function from parent
+    export let visible;  // accept the prop from parent
+    export let onClose = () => {};  // accept the close function from parent
 
     let selectedContent = ' ';
     let isViewingHistory = true;
@@ -22,7 +22,8 @@
     const returnToHistory = () => {
         isViewingHistory = true;
     }
-    const closeHistoryPopup = () => {
+    function closeHistoryPopup = () => {
+        visible = false;
         if (onClose) {
             onClose();
         }
@@ -34,10 +35,10 @@
 
 
 
-{#if showHistory}
-<div class="overlay" on:click={() => onClose()}></div>
-<div class="modal" style="--popupHeight: {popupHeight}">
-    <button class="close-btn" on:click={() => onClose()}>x</button>
+{#if visible}
+<div class="overlay" on:click={closeHistoryPopup}></div>
+<div class="modal">
+    <button on:click={closeHistoryPopup} class="close-btn">x</button>
     {#if isViewingHistory}
         <h2 class="text-3xl font-medium pb-1">History</h2>
         <div class="history-list">
@@ -72,6 +73,8 @@
         background: white;
         padding: 20px;
         z-index: 1001; /* Ensure this is higher than the overlay */
+        max-height: 80vh;
+        overflow-y: auto;
         /* Rest of your modal styles */
     }
     .history-list {
