@@ -233,14 +233,10 @@ onMount(async () => {
     	}
 </style>
 
+
 <header>
     <nav>
-        <button on:click={() => showLogin = !showLogin}>Login</button>
-        {#if showLogin}
-            <Login />
-        {/if}
-
-        <button on:click={toggleHistory}>{showHistory ? 'Close History' : 'History'}</button>
+        <button on:click={toggleHistory}>History</button> <!-- Add this button -->
     </nav>
 </header>
 {#if showHistory}
