@@ -3,7 +3,7 @@
     const dispatch = createEventDispatcher();
 
     export let visible;  // accept the prop from parent
-    export let onClose = () => {};  // accept the close function from parent
+    export let onClose;  // accept the close function from parent
 
     let selectedContent = ' ';
     let isViewingHistory = true;
@@ -22,6 +22,11 @@
     const returnToHistory = () => {
         isViewingHistory = true;
     }
+    $: if (!visible) {
+        // If the `visible` prop is changed externally, reset local state
+        isViewingHistory = true;
+        selectedContent = '';
+    }
     function closeHistoryPopup() {
         visible = false;
         if (onClose) {
@@ -37,7 +42,7 @@
 
 {#if visible}
 <div class="overlay" on:click={closeHistoryPopup}></div>
-<div class="modal">
+<div class="modal" style="--popupHeight: {popupHeight};">
     <button on:click={closeHistoryPopup} class="close-btn">x</button>
     {#if isViewingHistory}
         <h2 class="text-3xl font-medium pb-1">History</h2>
