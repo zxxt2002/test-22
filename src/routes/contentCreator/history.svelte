@@ -2,7 +2,7 @@
     import { createEventDispatcher } from 'svelte';
     const dispatch = createEventDispatcher();
 
-    export let visible;  // accept the prop from parent
+    export let showHistory;  // accept the prop from parent
     export let onClose;  // accept the close function from parent
 
     let selectedContent = ' ';
@@ -26,6 +26,7 @@
         if (onClose) {
             onClose();
         }
+        dispatch('close');
     };
 </script>
 
