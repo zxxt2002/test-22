@@ -35,7 +35,7 @@
 {#if visible}
 <div class="overlay fixed top-0 left-0 w-full h-full bg-black bg-opacity-70 z-10"></div>
 <div class="modal" style="--popupHeight: {popupHeight}">
-    <button on:click={closeHistoryPopup} class="close-btn">x</button>
+    <button on:click={onClose} class="close-btn">x</button>
     {#if isViewingHistory}
         <h2 class="text-3xl font-medium pb-1">History</h2>
         <div class="history-list">
