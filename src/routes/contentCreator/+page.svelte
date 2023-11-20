@@ -235,12 +235,27 @@ onMount(async () => {
         	background-color: black; /* Color of the separator line */
        		margin: 10px 0; /* Space above and below the line */
     	}
+	button.history-button {
+	        background-color: #007bff; /* Bootstrap primary color */
+	        color: white;
+	        padding: 0.5rem 1rem;
+	        margin: 0.5rem;
+	        border: none;
+	        border-radius: 0.25rem;
+	        cursor: pointer;
+	        font-size: 1rem;
+	        transition: background-color 0.15s ease-in-out;
+	}
+	
+	button.history-button:hover {
+	        background-color: #0056b3; /* Darken color on hover */
+	}
 </style>
 
 
 <header>
     <nav>
-        <button on:click={toggleHistory}>History</button> <!-- Add this button -->
+        <button class="history-button" on:click={toggleHistory}>History</button>
     </nav>
 </header>
 {#if showHistory}
