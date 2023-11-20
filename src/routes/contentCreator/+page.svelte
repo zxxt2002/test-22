@@ -361,3 +361,7 @@ onMount(async () => {
 <footer>
     <!-- Footer content remains unchanged -->
 </footer>
+
+<footer>
+    <!-- Footer content remains unchanged -->
+</footer>
