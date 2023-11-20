@@ -73,8 +73,6 @@
         background: white;
         padding: 20px;
         z-index: 1001; /* Ensure this is higher than the overlay */
-        max-height: 80vh;
-        overflow-y: auto;
         /* Rest of your modal styles */
     }
     .history-list {
