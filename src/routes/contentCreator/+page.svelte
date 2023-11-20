@@ -253,7 +253,7 @@ onMount(async () => {
 	.fixed-top-left {
 	        position: fixed;
 	        top: 200;
-	        left: 0;
+	        left: 50;
 	        margin: 1rem;
 	        z-index: 1050; /* Ensure it's above the modal */
 	}
@@ -269,11 +269,11 @@ onMount(async () => {
 
 <header>
     <nav>
-        <button class="history-button fixed-top-left" on:click={toggleHistory}>History</button>
+        <button class="history-button" on:click={toggleHistory}>History</button>
     </nav>
 </header>
 {#if showHistory}
-    <History bind:visible={showHistory} onClose={closeHistory} />
+    <History {visible}={showHistory} onClose={closeHistory} />
 {/if}
 <div class="max-w-md w-full m-auto flex flex-col items-center p-12">
     <h1 class="text-3xl font-semibold">Write Me an Article</h1>
