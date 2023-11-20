@@ -22,7 +22,7 @@
     const returnToHistory = () => {
         isViewingHistory = true;
     }
-    function closeHistoryPopup = () => {
+    function closeHistoryPopup() {
         visible = false;
         if (onClose) {
             onClose();
