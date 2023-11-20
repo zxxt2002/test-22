@@ -266,7 +266,7 @@ onMount(async () => {
 
 <header>
     <nav>
-        <button class="history-button fixed-top-left" on:click={toggleHistory}>History</button>
+        <button class="history-button" on:click={toggleHistory}>History</button>
     </nav>
 </header>
 {#if showHistory}
