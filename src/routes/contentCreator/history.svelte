@@ -66,7 +66,7 @@
     {#if isViewingHistory}
         <h2 class="text-3xl font-medium pb-1">History</h2>
         <div class="history-list">
-            {#each items as item}
+            {#each $historyItems as item}
                 <button on:click={() => viewContent(item)} class="history-item">
                     {item.keywords} - {item.timestamp}
                 </button>
