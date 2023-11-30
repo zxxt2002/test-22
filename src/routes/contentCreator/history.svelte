@@ -75,7 +75,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background: white;
+        background: black;
         padding: 20px;
         z-index: 1001; /* Ensure this is higher than the overlay */
         /* Rest of your modal styles */
@@ -98,7 +98,7 @@
     }
 
     .close-btn {
-        background-color: #f0f0f0;
+        background-color: #3b3939;
         border: none;
         border-radius: 50%;
         cursor: pointer;
