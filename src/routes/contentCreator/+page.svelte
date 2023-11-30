@@ -5,7 +5,7 @@
     import Login from './login.svelte'; // Ensure the correct path
     import History from './history.svelte';
     import { initializeApp } from 'firebase/app';
-    import { getFirestore, setDoc, getDocs, collection, Firestore } from 'firebase/firestore';
+    import { getFirestore, setDoc, getDocs, collection, Firestore, addDoc } from 'firebase/firestore';
     import { docStore } from "sveltefire";
     import { getAnalytics } from "firebase/analytics";
     import { onMount } from 'svelte';
@@ -28,12 +28,7 @@
     const db = getFirestore();
    // const analytics = getAnalytics(app);
 
-async function getPersonas(db: Firestore) {
-  const writingStylesCollection  = collection(db, 'writingStyles');
-  const querySnapshot  = await getDocs(writingStylesCollection);
-  const writingStylesData  = querySnapshot .docs.map(doc => doc.data());
-  return writingStylesData ;
-}
+
 
 function parseOutline(outline: string): string[] {
 
@@ -205,7 +200,28 @@ onMount(async () => {
 
         loading2 = false;
         error2 = answer2 === ''; // If no content is generated, consider it an error
+	try {
+	        const contentData = {
+	            keywords: keywords, // The keywords variable
+	            sections: answer2, // The array of generated content for each section
+	            timestamp: new Date() // A timestamp for when this was created
+	        };
+	
+	        await saveGeneratedContent(contentData);
+	        console.log("Content and keywords saved successfully");
+	 } catch (error) {
+	        console.error("Error saving content and keywords: ", error);
+	 }
     };
+
+	async function saveGeneratedContent(contentData) {
+	    try {
+	        const docRef = await addDoc(collection(db, "generatedArticles"), contentData);
+	        console.log("Document written with ID: ", docRef.id);
+	    } catch (error) {
+	        console.error("Error adding document: ", error);
+	    }
+	}
 
 	const copyToClipboard = () => {
 		const elem = document.createElement('textarea')
