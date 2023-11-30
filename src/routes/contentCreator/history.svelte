@@ -1,7 +1,7 @@
 <script>
     import { createEventDispatcher } from 'svelte';
     import { getDocs, collection } from 'firebase/firestore';
-    import { db } from './yourFirebaseConfig'; // Make sure to import your db from where it's initialized
+    import { db } from '../../firebaseConfig'; // Make sure to import your db from where it's initialized
     const dispatch = createEventDispatcher();
 
     export let visible;  // accept the prop from parent
