@@ -98,7 +98,7 @@
     }
 
     .close-btn {
-        background-color: #f0f0f0;
+        background-color: #383838;
         border: none;
         border-radius: 50%;
         cursor: pointer;
