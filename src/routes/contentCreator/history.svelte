@@ -7,12 +7,7 @@
 
     let selectedContent = ' ';
     let isViewingHistory = true;
-    let historyItems = [
-        'Generated content example 1...',
-        'Generated content example 2...',
-        'Generated content example 3...',
-        // Add more history items as needed
-    ];
+    let historyItems = [];
 
     let popupHeight = `${historyItems.length * 50}px`; 
     const viewContent = (/** @type {string} */ content) => {
@@ -34,6 +29,18 @@
         }
         dispatch('close');
     };
+    async function fetchHistory() {
+        const querySnapshot = await getDocs(collection(db, "generatedArticles"));
+        historyItems = querySnapshot.docs.map(doc => {
+            let data = doc.data();
+            return {
+                id: doc.id,
+                keywords: data.keywords,
+                content: data.sections.join(' '), // Join the sections into a single string
+                timestamp: data.timestamp
+            };
+        });
+    }
 </script>
 
 <!-- Your content before the button -->
