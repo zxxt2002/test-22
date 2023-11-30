@@ -1,5 +1,7 @@
 <script>
     import { createEventDispatcher } from 'svelte';
+    import { getDocs, collection } from 'firebase/firestore';
+    import { db } from './yourFirebaseConfig'; // Make sure to import your db from where it's initialized
     const dispatch = createEventDispatcher();
 
     export let visible;  // accept the prop from parent
@@ -9,10 +11,14 @@
     let isViewingHistory = true;
     let historyItems = [];
 
+    onMount(() => {
+        fetchHistory();
+    });
+
     let popupHeight = `${historyItems.length * 50}px`; 
-    const viewContent = (/** @type {string} */ content) => {
-        selectedContent = content;
-        console.log(selectedContent);
+    const viewContent = (item) => {
+        selectedContent = item.content; // Display the content of the clicked item
+        isViewingHistory = false; // Switch to viewing selected content
     };
     const returnToHistory = () => {
         isViewingHistory = true;
@@ -37,7 +43,7 @@
                 id: doc.id,
                 keywords: data.keywords,
                 content: data.sections.join(' '), // Join the sections into a single string
-                timestamp: data.timestamp
+                timestamp: data.timestamp.toDate().toLocaleString() // Format timestamp
             };
         });
     }
@@ -55,7 +61,9 @@
         <h2 class="text-3xl font-medium pb-1">History</h2>
         <div class="history-list">
             {#each historyItems as item}
-                <button on:click={() => viewContent(item)} class="history-item">{item}</button>
+                <button on:click={() => viewContent(item)} class="history-item">
+                    {item.keywords} - {item.timestamp}
+                </button>
             {/each}
         </div>
     {:else}
