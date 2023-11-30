@@ -35,18 +35,24 @@
         }
         dispatch('close');
     };
-    async function fetchHistory() {
+async function fetchHistory() {
+    try {
         const querySnapshot = await getDocs(collection(db, "generatedArticles"));
         historyItems = querySnapshot.docs.map(doc => {
             let data = doc.data();
             return {
                 id: doc.id,
                 keywords: data.keywords,
-                content: data.sections.join(' '), // Join the sections into a single string
+                content: data.sections.join(' '), // If sections is an array
                 timestamp: data.timestamp.toDate().toLocaleString() // Format timestamp
             };
         });
+        // Reassign the array to trigger reactivity
+        historyItems = historyItems.slice();
+    } catch (error) {
+        console.error("Error fetching history: ", error);
     }
+}
 </script>
 
 <!-- Your content before the button -->
