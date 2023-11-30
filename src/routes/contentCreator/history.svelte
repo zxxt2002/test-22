@@ -75,7 +75,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background: white;
+        background: black;
         padding: 20px;
         z-index: 1001; /* Ensure this is higher than the overlay */
         /* Rest of your modal styles */
