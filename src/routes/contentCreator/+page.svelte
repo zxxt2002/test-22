@@ -11,7 +11,7 @@
     import { onMount } from 'svelte';
     import ContentView from './contentView.svelte';
     import { marked } from 'marked';
-
+    import { historyItems } from '../../historyStore';
 
   
     const firebaseConfig = {
@@ -212,6 +212,15 @@ onMount(async () => {
 	 } catch (error) {
 	        console.error("Error saving content and keywords: ", error);
 	 }
+	    if (answer2) {
+	        const newItem = {
+	            keywords: keywords,
+	            content: answer2, // Assuming answer2 is the generated content
+	            timestamp: new Date().toLocaleString()
+	        };
+	
+	        historyItems.update(items => [...items, newItem]);
+	    }
     };
 
 	async function saveGeneratedContent(contentData) {
