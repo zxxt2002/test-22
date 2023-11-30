@@ -11,7 +11,6 @@
 
     let selectedContent = ' ';
     let isViewingHistory = true;
-    let historyItems = [];
     $: items = $historyItems;
     onMount(() => {
         fetchHistory();
