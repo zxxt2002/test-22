@@ -2,6 +2,8 @@
     import { createEventDispatcher } from 'svelte';
     import { getDocs, collection } from 'firebase/firestore';
     import { db } from '../../firebaseConfig'; // Make sure to import your db from where it's initialized
+    import { historyItems } from '../../historyStore';
+
     const dispatch = createEventDispatcher();
 
     export let visible;  // accept the prop from parent
@@ -10,7 +12,7 @@
     let selectedContent = ' ';
     let isViewingHistory = true;
     let historyItems = [];
-
+    $: items = $historyItems;
     onMount(() => {
         fetchHistory();
     });
@@ -60,7 +62,7 @@
     {#if isViewingHistory}
         <h2 class="text-3xl font-medium pb-1">History</h2>
         <div class="history-list">
-            {#each historyItems as item}
+            {#each items as item}
                 <button on:click={() => viewContent(item)} class="history-item">
                     {item.keywords} - {item.timestamp}
                 </button>
