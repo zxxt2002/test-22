@@ -37,17 +37,22 @@
         dispatch('close');
     };
     async function fetchHistory() {
-        const querySnapshot = await getDocs(collection(db, "generatedArticles"));
-        historyItems = querySnapshot.docs.map(doc => {
-            let data = doc.data();
-            return {
-                id: doc.id,
-                keywords: data.keywords,
-                content: data.sections.join(' '), // Join the sections into a single string
-                timestamp: data.timestamp.toDate().toLocaleString() // Format timestamp
-            };
-        });
-}
+        try {
+            const querySnapshot = await getDocs(collection(db, "generatedArticles"));
+            const items = querySnapshot.docs.map(doc => {
+                let data = doc.data();
+                return {
+                    id: doc.id,
+                    keywords: data.keywords,
+                    content: data.sections.join(' '), // Join the sections into a single string
+                    timestamp: data.timestamp.toDate().toLocaleString() // Format timestamp
+                };
+            });
+            historyItems.set(items); // Correct way to set the store's value
+        } catch (error) {
+            console.error("Error fetching history: ", error);
+        }
+    }
 </script>
 
 <!-- Your content before the button -->
