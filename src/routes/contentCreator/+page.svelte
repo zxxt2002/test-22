@@ -11,7 +11,7 @@
     import { onMount } from 'svelte';
     import ContentView from './contentView.svelte';
     import { marked } from 'marked';
-
+    import { historyItems } from '../../historyStore';
 
   
     const firebaseConfig = {
@@ -205,6 +205,15 @@ onMount(async () => {
 
         loading2 = false;
         error2 = answer2 === ''; // If no content is generated, consider it an error
+	if (answer2) {
+	        const newItem = {
+	            keywords: keywords,
+	            content: answer2, // Assuming answer2 is the generated content
+	            timestamp: new Date().toLocaleString()
+	        };
+	
+	        historyItems.update(items => [...items, newItem]);
+	    }
     };
 
 	const copyToClipboard = () => {
