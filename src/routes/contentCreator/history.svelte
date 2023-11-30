@@ -1,9 +1,5 @@
 <script>
     import { createEventDispatcher } from 'svelte';
-    import { getDocs, collection } from 'firebase/firestore';
-    import { db } from '../../firebaseConfig'; // Make sure to import your db from where it's initialized
-    import { historyItems } from '../../historyStore';
-
     const dispatch = createEventDispatcher();
 
     export let visible;  // accept the prop from parent
@@ -11,15 +7,17 @@
 
     let selectedContent = ' ';
     let isViewingHistory = true;
-    $: items = $historyItems;
-    onMount(() => {
-        fetchHistory();
-    });
+    let historyItems = [
+        'Generated content example 1...',
+        'Generated content example 2...',
+        'Generated content example 3...',
+        // Add more history items as needed
+    ];
 
     let popupHeight = `${historyItems.length * 50}px`; 
-    const viewContent = (item) => {
-        selectedContent = item.content; // Display the content of the clicked item
-        isViewingHistory = false; // Switch to viewing selected content
+    const viewContent = (/** @type {string} */ content) => {
+        selectedContent = content;
+        console.log(selectedContent);
     };
     const returnToHistory = () => {
         isViewingHistory = true;
@@ -36,23 +34,6 @@
         }
         dispatch('close');
     };
-    async function fetchHistory() {
-        try {
-            const querySnapshot = await getDocs(collection(db, "generatedArticles"));
-            const items = querySnapshot.docs.map(doc => {
-                let data = doc.data();
-                return {
-                    id: doc.id,
-                    keywords: data.keywords,
-                    content: data.sections.join(' '), // Join the sections into a single string
-                    timestamp: data.timestamp.toDate().toLocaleString() // Format timestamp
-                };
-            });
-            historyItems.set(items); // Correct way to set the store's value
-        } catch (error) {
-            console.error("Error fetching history: ", error);
-        }
-    }
 </script>
 
 <!-- Your content before the button -->
@@ -66,10 +47,8 @@
     {#if isViewingHistory}
         <h2 class="text-3xl font-medium pb-1">History</h2>
         <div class="history-list">
-            {#each $historyItems as item}
-                <button on:click={() => viewContent(item)} class="history-item">
-                    {item.keywords} - {item.timestamp}
-                </button>
+            {#each historyItems as item}
+                <button on:click={() => viewContent(item)} class="history-item">{item}</button>
             {/each}
         </div>
     {:else}
@@ -96,7 +75,7 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background: black;
+        background: white;
         padding: 20px;
         z-index: 1001; /* Ensure this is higher than the overlay */
         /* Rest of your modal styles */
@@ -119,7 +98,7 @@
     }
 
     .close-btn {
-        background-color: #383838;
+        background-color: #f0f0f0;
         border: none;
         border-radius: 50%;
         cursor: pointer;
