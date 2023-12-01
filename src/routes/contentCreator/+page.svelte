@@ -196,7 +196,7 @@ onMount(async () => {
             try {
                 const sectionContent = await generateSectionContent(context, i, outlineSections.length);
                 answer2 += sectionContent; // Append the content of each section to answer2
-                requestCount++;
+                //requestCount++;
             } catch (err) {
                 console.error("Error generating content for section:", err);
                 break; // Stop further processing on error

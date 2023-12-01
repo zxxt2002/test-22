@@ -8,20 +8,28 @@
 
     let selectedContent = ' ';
     let isViewingHistory = true;
+    let isViewingContent = false;
     let popupHeight = `${historyItems.length * 50}px`; 
     $: items = $historyItems;
-    const viewContent = (/** @type {string} */ content) => {
-        selectedContent = content;
-        console.log(selectedContent);
+
+    const viewContent = item => {
+        selectedContent = item.content;
+        isViewingHistory = false;
+        isViewingContent = true; // Set true when content is being viewed
     };
+
     const returnToHistory = () => {
         isViewingHistory = true;
-    }
+        isViewingContent = false; // Set false to go back to history
+    };
+
     $: if (!visible) {
         // If the `visible` prop is changed externally, reset local state
         isViewingHistory = true;
+        isViewingContent = false;
         selectedContent = '';
     }
+
     function closeHistoryPopup() {
         visible = false;
         if (onClose) {
@@ -53,23 +61,26 @@
 
 
 {#if visible}
-<div class="overlay" on:click={closeHistoryPopup}></div>
-<div class="modal" style="--popupHeight: {popupHeight};">
-    <button on:click={closeHistoryPopup} class="close-btn">x</button>
-    {#if isViewingHistory}
-        <h2 class="text-3xl font-medium pb-1">History</h2>
-        <div class="history-list">
-            {#each $historyItems as item}
-                <button on:click={() => viewContent(item)} class="history-item">
-                    {item.keywords} - {item.timestamp}
-                </button>
-            {/each}
-        </div>
-    {:else}
-        <button on:click={returnToHistory} class="history-item">Back</button>
-        <div class="content">{selectedContent}</div>
-    {/if}
-</div>
+    <div class="overlay" on:click={closeHistoryPopup}></div>
+    <div class="modal">
+        <button on:click={closeHistoryPopup} class="close-btn">x</button>
+        {#if isViewingHistory}
+            <h2>History</h2>
+            <div class="history-list">
+                {#each $historyItems as item}
+                    <button on:click={() => viewContent(item)} class="history-item">
+                        {item.keywords} - {item.timestamp}
+                    </button>
+                {/each}
+            </div>
+        {:else if isViewingContent}
+            <!-- Content view with a back button -->
+            <button on:click={returnToHistory} class="back-button">Back</button>
+            <div class="content-view">
+                {@html selectedContent}
+            </div>
+        {/if}
+    </div>
 {/if}
 
 <style>
@@ -92,6 +103,8 @@
         background: black;
         padding: 20px;
         z-index: 1001; /* Ensure this is higher than the overlay */
+        max-height: 80vh; /* or any other value that suits your design */
+        overflow-y: auto; /* Enable vertical scrolling */
         /* Rest of your modal styles */
     }
     .history-list {
@@ -109,6 +122,9 @@
 
     .content {
         font-size: 1rem;
+    }
+    .content-view {
+    padding: 1rem; /* Add padding for content readability */
     }
 
     .close-btn {
